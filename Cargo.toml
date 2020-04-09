@@ -3,6 +3,9 @@ name = "rusty-swagger"
 version = "0.1.0"
 authors = ["Patrick Amrein <amrein@ubique.ch>"]
 edition = "2018"
+description = "Package to generate latex documentation from OpenAPI 3.0 YAML specifications"
+license = "Apache-2.0"
+homepage = "https://github.com/Ubique-OSS/openapi3-yaml2tex"
 
 [dependencies]
 serde = "*"
