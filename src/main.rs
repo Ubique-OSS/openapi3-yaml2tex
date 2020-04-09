@@ -1,5 +1,7 @@
+#[macro_use]
 extern crate serde_derive;
 extern crate yaml_rust;
+
 extern crate serde;
 extern crate reqwest;
 extern crate regex;
@@ -11,7 +13,8 @@ use std::error;
 use serde::{Serialize};
 use regex::RegexSet;
 
-fn main() {
+#[tokio::main]
+async fn main(){
     let mut args = std::env::args();
     let mut owner = String::new();
     let mut api = String::new();
@@ -51,7 +54,7 @@ fn main() {
             println!("We need either e filename or the swaggerhub options. Use the --help switch");
             std::process::exit(1);
         }
-        get_swagger_config(&owner, &api, &apiVersion, &authorization);
+        get_swagger_config(&owner, &api, &apiVersion, &authorization).await;
         fileName = format!("swagger-{}.yaml", apiVersion);
     }
     let content = fs::read_to_string(fileName).expect("Could not read swagger yaml");
@@ -75,12 +78,12 @@ fn main() {
     //start filling our model
    // println!("{:?}", theDoc);
 }
-pub fn get_swagger_config(owner : &str, api : &str, version : &str, authorization : &str){
+pub async fn get_swagger_config(owner : &str, api : &str, version : &str, authorization : &str){
     let mut headers = reqwest::header::HeaderMap::new();
     headers.insert("Authorization", authorization.parse().unwrap());
     headers.insert("Accept", "application/yaml".parse().unwrap());
     let client = reqwest::Client::builder().default_headers(headers).gzip(true).build().expect("Could not build HttpClient");
-    let body = client.get(&format!("https://api.swaggerhub.com/apis/{}/{}/{}", owner, api, version)).send().expect("Request sending failed").text().expect("failure retrieving body");
+    let body = client.get(&format!("https://api.swaggerhub.com/apis/{}/{}/{}", owner, api, version)).send().await.expect("Request sending failed").text().await.expect("failure retrieving body");
     println!("{}", version);
     std::fs::write(&format!("swagger-{}.yaml", version), body).expect("Could not write swagger definition");
 }
