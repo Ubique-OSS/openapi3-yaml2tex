@@ -1,0 +1,14 @@
+[package]
+name = "rusty-swagger"
+version = "0.1.0"
+authors = ["Patrick Amrein <amrein@ubique.ch>"]
+edition = "2018"
+
+[dependencies]
+serde = "*"
+serde_derive = "*"
+yaml-rust = "0.4.3"
+mustache = "0.9.0"
+reqwest = "0.9.17"
+regex = "1.1.6"
+
