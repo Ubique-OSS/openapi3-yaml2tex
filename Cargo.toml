@@ -5,7 +5,9 @@ authors = ["Patrick Amrein <amrein@ubique.ch>"]
 edition = "2018"
 description = "Package to generate latex documentation from OpenAPI 3.0 YAML specifications"
 license = "Apache-2.0"
+repository = "https://github.com/Ubique-OSS/openapi3-yaml2tex"
 homepage = "https://github.com/Ubique-OSS/openapi3-yaml2tex"
+readme = "README.md"
 
 [dependencies]
 serde = "*"
